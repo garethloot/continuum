@@ -17,11 +17,9 @@
     const showButton = () => setIsVisible(true);
     const toggleVisibility = () => setIsVisible(s => !s);
 
-    useEffect(() => {
-      B.defineFunction('Show', showButton);
-      B.defineFunction('Hide', hideButton);
-      B.defineFunction('ToggleVisibility', toggleVisibility);
-    }, []);
+    B.defineFunction('Show', showButton);
+    B.defineFunction('Hide', hideButton);
+    B.defineFunction('ToggleVisibility', toggleVisibility);
 
     function clickHandler() {
       if (linkType === 'endpoint' && endpoint) {

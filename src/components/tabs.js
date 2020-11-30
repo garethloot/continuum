@@ -4,7 +4,7 @@
   allowedTypes: ['TAB'],
   orientation: 'HORIZONTAL',
   jsx: (() => {
-    const { Children, env, defineFunction, triggerEvent } = B;
+    const { Children, env } = B;
     const { defaultValue } = options;
 
     const isDev = env === 'dev';
@@ -19,9 +19,7 @@
       setValue(Number(i));
     }
 
-    useEffect(() => {
-      defineFunction('SetActiveTab', handleChange);
-    }, []);
+    B.defineFunction('SetActiveTab', handleChange);
 
     const Tabs = (
       <div className={classes.tabs}>

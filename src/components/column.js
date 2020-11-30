@@ -95,7 +95,7 @@
         height: ({ options: { columnHeight } }) => columnHeight,
         minHeight: 1,
         backgroundColor: ({ options: { backgroundColor } }) =>
-          backgroundColor === '' || backgroundColor === 'Transparent'
+          backgroundColor === '' || backgroundColor === 'transparent'
             ? 'transparent'
             : style.getColor(backgroundColor),
         backgroundImage: 'none',

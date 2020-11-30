@@ -192,7 +192,7 @@
           type: 'SIZES',
           label: 'Border Radius',
           key: 'borderRadius',
-          value: ['', '', '', ''],
+          value: ['0rem', '0rem', '0rem', '0rem'],
         },
         {
           type: 'TOGGLE',

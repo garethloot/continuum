@@ -94,7 +94,7 @@
         marginBlockStart: '0px',
         marginBlockEnd: '0px',
         color: ({ options: { type, textColor } }) =>
-          textColor === 'Transparent' || textColor === ''
+          textColor === 'transparent' || textColor === ''
             ? style.getFontColor(type)
             : style.getColor(textColor),
         fontFamily: ({ options: { type } }) => {

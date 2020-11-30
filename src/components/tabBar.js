@@ -4,8 +4,6 @@
   allowedTypes: [],
   orientation: 'HORIZONTAL',
   jsx: (() => {
-    const { triggerEvent, defineFunction } = B;
-
     const { itemsList } = options;
 
     const [active, setActive] = useState(0);
@@ -14,7 +12,7 @@
 
     function handleClick(i) {
       setActive(i);
-      triggerEvent('onClick', i);
+      B.triggerEvent('onClick', i);
     }
 
     function Item(props) {

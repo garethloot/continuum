@@ -5,7 +5,7 @@
   orientation: 'HORIZONTAL',
   jsx: (() => {
     const { jwtToken, refreshToken, loginEndpoint, redirect } = options;
-    const { useText, env, defineFunction, useEndpoint } = B;
+    const { useText, env, useEndpoint } = B;
     const isDev = env === 'dev';
 
     const history = !isDev && useHistory();
@@ -33,12 +33,10 @@
       window.location.replace(webblocks);
     }
 
-    useEffect(() => {
-      defineFunction('GoToEndpoint', goToLogin);
-      defineFunction('redirect', redirectTo);
-    }, []);
+    B.defineFunction('GoToEndpoint', goToLogin);
+    B.defineFunction('redirect', redirectTo);
 
-    return <div className={classes.root}>{isDev ? value : null}</div>;
+    return <div className={classes.root}>{isDev ? value : ''}</div>;
   })(),
   styles: B => theme => {
     const style = new B.Styling(theme);

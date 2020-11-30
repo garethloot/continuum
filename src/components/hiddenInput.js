@@ -6,7 +6,7 @@
   jsx: (() => {
     const { defaultValue, required, disabled, actionInputId } = options;
 
-    const { getActionInput, useText, env, defineFunction } = B;
+    const { getActionInput, useText, env } = B;
     const isDev = env === 'dev';
     const [currentValue, setCurrentValue] = useState(useText(defaultValue));
     const actionInput = getActionInput(actionInputId);
@@ -17,9 +17,7 @@
       }
     }, [isDev, defaultValue]);
 
-    useEffect(() => {
-      defineFunction('setValue', value => setCurrentValue(value));
-    }, []);
+    B.defineFunction('setValue', value => setCurrentValue(value));
 
     const InputCmp = (
       <input

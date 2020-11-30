@@ -1,0 +1,62 @@
+{
+  "data": {
+    "allChapteritem": {
+      "results": [
+        {
+          "coursefile": null,
+          "duration": "29m 47s",
+          "itemTitle": "Variables",
+          "itemType": "Video",
+          "mycourseprogresses": [],
+          "slug": "variables-2",
+          "video": { "link": "https://vimeo.com/462629510" }
+        },
+        {
+          "coursefile": null,
+          "duration": "29m 47s",
+          "itemTitle": "Validation",
+          "itemType": "Video",
+          "mycourseprogresses": [{ "isFinished": true }],
+          "slug": "validation-4",
+          "video": { "link": "https://vimeo.com/462629510" }
+        },
+        {
+          "coursefile": {
+            "fileTitle": "Test image",
+            "fileitem": {
+              "fileName": "Image file",
+              "fileProperty": {
+                "url": "https://assets.bettyblocks.com/838e7de11-1e2810c402714b62a81c2371145d9a47/1/markus-winkler-afW1hht0NSs-unsplash.jpg?AWSAccessKeyId=M6ZEI1L9HX51DHY37VCR&Expires=1606408838&Signature=h5%2FXpzqYhrlUryj9egnr5LpEjRA%3D"
+              }
+            },
+            "id": 1
+          },
+          "duration": "00m 00s",
+          "itemTitle": "Exercise 1",
+          "itemType": "Exercise",
+          "mycourseprogresses": [],
+          "slug": "exercise-1-6",
+          "video": null
+        },
+        {
+          "coursefile": {
+            "fileTitle": "Test pdf",
+            "fileitem": {
+              "fileName": "Webservices",
+              "fileProperty": {
+                "url": "https://assets.bettyblocks.com/838e7de11-1e2810c402714b62a81c2371145d9a47/2/Webservices.pdf?AWSAccessKeyId=M6ZEI1L9HX51DHY37VCR&Expires=1606408838&Signature=HZHvUci7on0eLDxb6b4bWZlEjdU%3D"
+              }
+            },
+            "id": 2
+          },
+          "duration": "00m 00s",
+          "itemTitle": "Pdf",
+          "itemType": "Exercise",
+          "mycourseprogresses": [],
+          "slug": "pdf-7",
+          "video": null
+        }
+      ]
+    }
+  }
+}

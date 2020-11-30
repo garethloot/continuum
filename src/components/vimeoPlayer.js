@@ -4,8 +4,11 @@
   allowedTypes: [],
   orientation: 'HORIZONTAL',
   jsx: (() => {
-    const { useText, triggerEvent } = B;
+    const { useText, env } = B;
     const { vimeoUrl } = options;
+
+    const isDev = env === 'dev';
+
     const playerRef = useRef(null);
 
     let vimeoPlayer = {};
@@ -16,8 +19,14 @@
         id: url,
         responsive: true,
       });
-      newPlayer.on('play', () => triggerEvent('onPlay'), 'play');
-      newPlayer.on('ended', () => triggerEvent('onEnded'), 'ended');
+      newPlayer.on('play', () => {
+        console.log('Vimeo', 'play');
+        B.triggerEvent('onPlay', 'play');
+      });
+      newPlayer.on('ended', () => {
+        console.log('ended');
+        B.triggerEvent('onEnded', 'ended');
+      });
       vimeoPlayer = newPlayer;
     }
 
@@ -25,24 +34,26 @@
       if (url) {
         createPlayer();
       }
-    });
+    }, []);
 
     return url ? (
-      <div className={classes.wrapper}>
+      <div className={[classes.wrapper, isDev ? classes.dev : null].join(' ')}>
         <div ref={playerRef} />
       </div>
     ) : (
-      <div>No access</div>
+      <div>{isDev ? 'Vimeo Player' : null}</div>
     );
   })(),
   styles: B => theme => {
     const style = new B.Styling(theme);
     return {
       wrapper: {
-        minHeight: '400px',
         overflow: 'hidden',
         borderRadius: ({ options: { radius } }) =>
           style.getBorderRadius(radius),
+      },
+      dev: {
+        minHeight: '400px',
       },
     };
   },

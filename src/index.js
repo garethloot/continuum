@@ -10,7 +10,7 @@ import Icons from './icons';
 window.gql = gql;
 window.Player = Player;
 
-function css() {
+function cssFonts() {
   const cssId = 'myCss'; // you could encode the css path itself to generate id..
   if (!document.getElementById(cssId)) {
     const head = document.getElementsByTagName('head')[0];
@@ -25,6 +25,25 @@ function css() {
   }
 }
 
-css();
+function scripts() {
+  const head = document.getElementsByTagName('head')[0];
+  const scriptImport = document.createElement('script');
+  const scriptTag = document.createElement('script');
+  scriptImport.async = true;
+  scriptImport.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q8S6CNP044';
+  scriptTag.innerText = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q8S6CNP044');
+  `;
+  if (window.location.hostname === 'cl-new.betty.app') {
+    head.appendChild(scriptImport);
+    head.appendChild(scriptTag);
+  }
+}
+
+cssFonts();
+scripts();
 
 export default { Core, Icons, Lab, Pickers, Styles, DateFnsUtils };
