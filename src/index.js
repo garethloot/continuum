@@ -31,13 +31,26 @@ function scripts() {
   const scriptTag = document.createElement('script');
   scriptImport.async = true;
   scriptImport.src = 'https://www.googletagmanager.com/gtag/js?id=G-Q8S6CNP044';
-  scriptTag.innerText = `
+  const wuser = localStorage.getItem('wuser');
+  if (wuser) {
+    scriptTag.innerText = `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q8S6CNP044', {
+    'user_id': '${wuser}'
+  });
+  `;
+  } else {
+    scriptTag.innerText = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-Q8S6CNP044');
   `;
-  if (window.location.hostname === 'cl-new.betty.app') {
+  }
+
+  if (window.location.hostname === 'learning.betty.app') {
     head.appendChild(scriptImport);
     head.appendChild(scriptTag);
   }

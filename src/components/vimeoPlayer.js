@@ -23,9 +23,24 @@
         console.log('Vimeo', 'play');
         B.triggerEvent('onPlay', 'play');
       });
+      newPlayer.on('playing', () => {
+        console.log('Vimeo', 'playing');
+        B.triggerEvent('onPlaying', 'playing');
+      });
+      newPlayer.on('pause', () => {
+        console.log('Vimeo', 'pause');
+        B.triggerEvent('onPause', 'pause');
+      });
+      newPlayer.on('loaded', () => {
+        console.log('Vimeo', 'loaded');
+        B.triggerEvent('onLoaded', 'loaded');
+      });
       newPlayer.on('ended', () => {
         console.log('ended');
         B.triggerEvent('onEnded', 'ended');
+      });
+      newPlayer.on('timeupdate', event => {
+        console.log('ended', event);
       });
       vimeoPlayer = newPlayer;
     }

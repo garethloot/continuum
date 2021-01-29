@@ -62,6 +62,20 @@
         },
         {
           type: 'TOGGLE',
+          label: 'Target Blank',
+          key: 'targetBlank',
+          value: true,
+          configuration: {
+            condition: {
+              type: 'SHOW',
+              option: 'linkType',
+              comparator: 'EQ',
+              value: 'external',
+            },
+          },
+        },
+        {
+          type: 'TOGGLE',
           label: 'Visible',
           key: 'visible',
           value: true,

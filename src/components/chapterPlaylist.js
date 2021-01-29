@@ -5,10 +5,10 @@
   orientation: 'HORIZONTAL',
   jsx: (() => {
     const { gql } = window;
-    const { Query, useProperty, useText, env } = B;
+    const { Query, useProperty, useText, env, useAction } = B;
     const isDev = env === 'dev';
 
-    const { chapterId, cSlug, cUser } = options;
+    const { chapterId, cSlug, cUser, actionId, actionProperties } = options;
     const id = isDev || useProperty(chapterId);
     const currentSlug = isDev || useText(cSlug);
     const currentUser = isDev || useProperty(cUser);
@@ -121,14 +121,51 @@
     };
 
     const CheckIcon = props => {
-      const { seen, hasaccess } = props;
+      const { seen: initSeen, hasaccess, slug } = props;
+      const propertyMappings = new Map(actionProperties);
+      const input = Array.from(propertyMappings.keys()).reduce((acc, key) => {
+        const propertyId = propertyMappings.get(key);
+
+        const value = isDev ? '' : B.useProperty(propertyId);
+        acc[key] = value;
+        return acc;
+      }, {});
+      const [value, setValue] = useState(input);
+      const [seen, setSeen] = useState(initSeen);
+
+      const [actionCallback, { loading }] = useAction(actionId, {
+        variables: {
+          input: value,
+        },
+        onCompleted(data) {
+          setSeen(data.actionb5);
+          B.triggerEvent('onToggleSeenSuccess', data.actionb5);
+        },
+        onError(error) {
+          B.triggerEvent('onToggleSeenError', error.message);
+        },
+      });
+
+      useEffect(() => {
+        if (value.slug) actionCallback();
+      }, [value]);
+
       function click(evt) {
         evt.stopPropagation();
-        console.log('toggleSeen');
+        input.seen = seen;
+        input.slug = slug;
+        setValue({ ...input });
+      }
+      if (loading) {
+        return (
+          <div className={[classes.icon].join(' ')}>
+            <i class="zmdi zmdi-spinner zmdi-hc-spin zmdi-hc-lg zmdi-hc-fw"></i>
+          </div>
+        );
       }
       return hasaccess ? (
         <div
-          onClick={click}
+          onClick={e => click(e)}
           className={[
             classes.icon,
             !seen ? classes.accent : classes.green,
@@ -196,10 +233,10 @@
           <Icon icon={icon} />
           <Body
             title={itemTitle}
-            subtitle={type === 'video' ? duration : 'File download'}
+            subtitle={type === 'exercise' ? 'File download' : duration}
             type={type}
           />
-          <CheckIcon seen={seen} hasaccess={hasAccess} />
+          <CheckIcon seen={seen} hasaccess={hasAccess} slug={slug} />
         </div>
       );
     }
@@ -208,20 +245,40 @@
       const query = currentUser ? GET_ITEMS : GET_ITEMS_ANON;
       return (
         <div className={classes.root}>
-          <Query query={query} variables={{ id }}>
+          <Query fetchPolicy="network-only" query={query} variables={{ id }}>
             {({ loading, error, data }) => {
               if (loading) return 'Loading...';
               if (error) return `Error! ${error.message}`;
               const {
                 allChapteritem: { results },
               } = data;
-              return results.map(item => <Item item={item} />);
+              return results.map(item => <Item key={item.id} item={item} />);
             }}
           </Query>
         </div>
       );
     }
-    return isDev ? <div>Example</div> : playList();
+    return isDev ? (
+      <div className={classes.root}>
+        <div className={classes.item}>
+          <Icon icon="video" />
+          <Body title="Video unseen" subtitle="12m 34s" type="video" />
+          <CheckIcon hasaccess />
+        </div>
+        <div className={classes.item}>
+          <Icon icon="play" />
+          <Body title="Playing video" subtitle="12m 34s" type="playvideo" />
+          <CheckIcon seen hasaccess />
+        </div>
+        <div className={classes.item}>
+          <Icon icon="exercise" />
+          <Body title="Exercise" subtitle="File download" type="exercise" />
+          <CheckIcon seen hasaccess />
+        </div>
+      </div>
+    ) : (
+      playList()
+    );
   })(),
   styles: B => theme => {
     const style = new B.Styling(theme);
@@ -232,6 +289,10 @@
       item: {
         display: 'flex',
         marginBottom: '10px',
+        transition: '0.3s',
+        '&:hover': {
+          transform: 'scale(1.02)',
+        },
       },
       body: {
         flexGrow: 1,

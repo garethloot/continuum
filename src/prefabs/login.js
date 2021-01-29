@@ -19,6 +19,12 @@
           value: [''],
         },
         {
+          type: 'PROPERTY',
+          label: 'User ID',
+          key: 'userId',
+          value: '',
+        },
+        {
           type: 'TEXT',
           label: 'Login endpoint',
           key: 'loginEndpoint',

@@ -5,7 +5,14 @@
   orientation: 'HORIZONTAL',
   jsx: (() => {
     const { useText, env, useEndpoint } = B;
-    const { label, endpoint, visible, linkType, linkToExternal } = options;
+    const {
+      label,
+      endpoint,
+      visible,
+      linkType,
+      linkToExternal,
+      targetBlank,
+    } = options;
 
     const isDev = env === 'dev';
 
@@ -26,7 +33,11 @@
         history.push(useEndpoint(endpoint));
       }
       if (linkType === 'external' && linkToExternal !== []) {
-        window.location.href = useText(linkToExternal);
+        if (targetBlank) {
+          window.open(useText(linkToExternal), '_blank');
+        } else {
+          window.location.href = useText(linkToExternal);
+        }
       }
     }
 

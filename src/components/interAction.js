@@ -18,32 +18,31 @@
       return acc;
     }, {});
 
-    function Action(msg) {
-      console.log('action start');
+    const [value, setValue] = useState(input);
 
-      if (typeof msg === 'string') {
-        input.message = msg;
-      }
-      console.log('before action', input);
-      const [actionCallback, { loading }] = useAction(actionId, {
-        variables: {
-          input,
-        },
-        onCompleted(data) {
-          B.triggerEvent('onActionSuccess', data.actionb5);
-        },
-        onError(error) {
-          B.triggerEvent('onActionError', error.message);
-        },
-      }) || [() => {}, { loading: false }];
-      console.log('action', input);
-      actionCallback();
-    }
+    const [actionCallback] = useAction(actionId, {
+      variables: {
+        input: value,
+      },
+      onCompleted(data) {
+        B.triggerEvent('onActionSuccess', data.actionb5);
+      },
+      onError(error) {
+        B.triggerEvent('onActionError', error.message);
+      },
+    });
 
     useEffect(() => {
-      B.defineFunction('withMessage', message => {
-        console.log('interAction', message);
-        Action(message, input);
+      B.defineFunction('actionWithMessage', message => {
+        if (typeof message === 'string') {
+          input.message = message;
+          setValue({ ...input });
+        }
+        actionCallback();
+        setValue({});
+      });
+      B.defineFunction('Reload', data => {
+        if (data === 'ended') history.go(0);
       });
     }, []);
 
