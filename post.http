@@ -1,8 +1,0 @@
-POST https://vslangedijk.redlumy.nl/Identity/Account/Login
-Content-Type: application/x-www-form-urlencoded
-
-{
-    "Input.Email": "test",
-    "Input.Password": "test",
-    "__RequestVerificationToken": "CfDJ8KeCE-EvHmpKoVJz1HNoNxyIpiaZSieuH4IiOjwQvz0v_I170UuwumVmgs0CO3aN7Xg2X3VXFh6a4Pa8aXFprqQPdP1qKC6TNEmdohVpFbGqtaTxJ_9djVJPstkEM6K6tzwLXlJifDRLIbViKuc8cjU"
-}
